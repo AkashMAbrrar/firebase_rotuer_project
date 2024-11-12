@@ -1,12 +1,25 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { authContext } from "./Provider/AuthProvider";
+import { Result } from "postcss";
 
 const Login = () => {
+  // login with email and password
+  const { singInUser } = useContext(authContext);
+
+  // login for create user
   const handleLogin = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
     console.log(email, password);
+    singInUser(email, password)
+      .then((result) => {
+        console.log(result.user);
+      })
+      .catch((error) => {
+        console.log("email and password", error.message);
+      });
   };
 
   return (
